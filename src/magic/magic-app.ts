@@ -103,8 +103,7 @@ yargs(hideBin(process.argv))
         argv.value,
       );
       collection.addCard(newCard);
-    },
-  )
+    })
   .command(
     "update",
     "Actualizar una carta existente en la colección",

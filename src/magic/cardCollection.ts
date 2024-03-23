@@ -11,7 +11,7 @@ export class CardCollection {
   constructor(username: string) {
     this.username = username;
 
-    this.collectionPath = `../collections/${this.username}`;
+    this.collectionPath = `./collections/${this.username}`;
     // Si el directorio no está ya creado, lo creamos.
     if (!fs.existsSync(this.collectionPath)) {
       fs.mkdirSync(this.collectionPath);
