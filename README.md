@@ -14,3 +14,5 @@ Al principio en el programa se intento usar un array de objetos del tipo carta, 
 
 Uso:
 node dist/src/magic/magic-app.js add --user "ale" --id 1 --name "Black Lotus" --mana 0 --color "colorless" --type "Artifact" --rarity "mythic" --rules "T: Sacrifice Black Lotus: Add three mana of any one color to your mana pool." --value 20000
+
+Nota: se prefiere el uso de console.log para indicar los fallos ya que al estar orientado a comandos no nos hace falta un control tan preciso del flujo de errores como si el programa se ejecutase continuamente y porque daba problemas con el uso de chalk o de yargs.

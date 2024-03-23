@@ -41,7 +41,7 @@ export class CardCollection {
         this.cards.set(card.id, card);
       }
     } catch (err) {
-      throw new Error(
+      console.log(
         chalk.red(`Error`) +
           `: no se ha conseguido leer el fichero ` +
           chalk.green(`${this.collectionPath}`),
@@ -54,14 +54,14 @@ export class CardCollection {
     // console.log(JSON.stringify([...this.cards.values()], null, 2));
     fs.writeFile(this.collectionPath, cardsData, (err) => {
       if (err) {
-        throw new Error(
+        console.log(
           chalk.red(`Error`) +
             `: No se pudo escribir en el archivo ${this.collectionPath}.`,
         );
       } else {
         console.log(
-          `Cartas ` +
-            chalk.green(`escritas correctamente`) +
+          `Estado de la colección ` +
+            chalk.green(`escrito correctamente`) +
             ` en el archivo ${this.collectionPath}.`,
         );
       }
@@ -94,7 +94,7 @@ export class CardCollection {
           ` en la colección.`,
       );
     } else {
-      throw new Error(
+      console.log(
         chalk.red(`Error`) +
           `: No existe una carta con el ID especificado en la colección.`,
       );
@@ -110,13 +110,13 @@ export class CardCollection {
           chalk.green(`eliminada correctamente`) +
           ` de la colección.`,
       );
+      this.writeCards();
     } else {
-      throw new Error(
+      console.log(
         chalk.red(`Error`) +
           `: No existe una carta con el ID especificado en la colección.`,
       );
     }
-    this.writeCards();
   }
 
   listCards(): string {
