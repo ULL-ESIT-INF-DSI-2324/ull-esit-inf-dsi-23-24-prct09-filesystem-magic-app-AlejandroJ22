@@ -247,7 +247,7 @@ attributes(): string {
 
 ### Clase CardCollection
 
-Esta clase representa una colección de cartas en el juego de Magic: The Gathering. Cuenta con:
+Esta clase representa una colección de cartas en el juego de Magic: The Gathering. Al principio en el programa se intento usar un array de objetos del tipo carta, pero al final se optó por usar un mapa de cartas  basado en su id, ya que la implementaciónd de los métodos necesarios es mucho más cómodo así. Esta clase cuenta con:
 
 - **Interfaz pública**: La clase implementa una interfaz *CardCollectionInterface* que describe los métodos públicos que puede utilizar un usuario para interactuar con la colección de cartas. Estos métodos incluyen *addCard()*, *updateCard()*, *removeCard()*, *listCards()* y *showCardInfo()*.
 
@@ -327,20 +327,35 @@ typescript. Antes apunte como nota que la escritura se hace de manera asíncrona
 
 - **Métodos de interacción con la colección**: Los métodos *addCard()*, *updateCard()*, *removeCard()*, *listCards()* y *showCardInfo()* permiten al usuario **agregar**, **actualizar**, **eliminar**, **listar** y **ver** información detallada de las cartas en la colección. Si la función modifica algo de la colección se hace una llamada a *writeCards()* para guardar el estado de la colección en el .JSON.
 
+**Nota**: se prefiere el uso de *console.log()* para indicar los fallos ya que al estar orientado a comandos no nos hace falta un control tan preciso del flujo de errores como si el programa se ejecutase continuamente y porque daba problemas con el uso de *chalk*.
+
 > **[Volver al índice](#índice)**
 
 ### Comandos
 
+En este apartado no me voy a parar durante demasiado tiempo ya que no hay mucho que destacar, simplemente se crean diferentes comandos con varios argumentos con los que poder usar la clase *CardCollection* ya mencionada. En resumen, es un fichero que declara esos diferentes comandos y hace de traductor entre los argumentos introducidos por el usuario y la colección de cartas.
+
+Si se quieren ver los comandos que se pueden usar con el programa basta con ejecutar el siguiente comando desde la carpeta main del proyecto:
+
+```bash
+node dist/src/magic/magic-app.js --help
+```
 
 > **[Volver al índice](#índice)**
 
 ## Ejercicio PE
 
+El ejercicio planteado en la modificación de la práctica semanal fue el de usar el patrón de diseño *Template Method* para una clase que buscaba el poder realizar de diferentes maneras el método reduce() de array.prototype() para una lista de números, aunque no me acordé de usar el *método plantilla* ni de agrergar los *hooks*. En su lugar creé clase abstracta llamada *FilterMapReduce* y varias clases concretas que extienden esta clase base.
+
+La clase abstracta *FilterMapReduce* proporciona métodos para filtrar, mapear y reducir una lista de números. Los métodos Filter y Map están implementados en la clase base, mientras que el método *Reduce()* es un método abstracto que debe ser implementado por las clases hijas.
+
+Las clases concretas que extienden *FilterMapReduce* son *FilterMapAddReduce*, *FilterMapSubReduce*, *FilterMapProdReduce* y *FilterMapDivReduce*, cada una implementando el método Reduce de manera diferente para realizar una operación de **suma**, **resta**, **producto** o **división**, respectivamente, en la lista de números.
 
 > **[Volver al índice](#índice)**
 
 ## Posibles mejoras
 
+Una de las posibles mejoras sobre este proyecto de coleccion de cartas de Magic podría ser la capacidad de imprimir de mejor manera los errores que ocurren en la ejecución del programa, las pruebas unitarias creo que cumplen su papel pero se debería de trabajar más en ellas ya que no cubren ni siquiera el 90% del porgrama y otra queja posible que se podría abordar en un futuro sería el de ir modificando el .JSON en lugar de borrarlo todo y volverlo a cargar de cero, ya que es un problema bastante grave de rendimiento.
 
 > **[Volver al índice](#índice)**
 
@@ -352,13 +367,3 @@ typescript. Antes apunte como nota que la escritura se hace de manera asíncrona
 [Apuntes asignatura sobre Node.js](https://ull-esit-inf-dsi-2324.github.io/nodejs-theory/nodejs-filesystem-childproc.html)
 
 > **[Volver al índice](#índice)**
-
-Implementar el metodo plantilla y hook!!!
-
-
-Al principio en el programa se intento usar un array de objetos del tipo carta, pero al final se optó por usar un mapa de cartas  basado en su id
-
-Uso:
-node dist/src/magic/magic-app.js add --user "ale" --id 1 --name "Black Lotus" --mana 0 --color "colorless" --type "Artifact" --rarity "mythic" --rules "T: Sacrifice Black Lotus: Add three mana of any one color to your mana pool." --value 20000
-
-Nota: se prefiere el uso de console.log para indicar los fallos ya que al estar orientado a comandos no nos hace falta un control tan preciso del flujo de errores como si el programa se ejecutase continuamente y porque daba problemas con el uso de chalk o de yargs.
