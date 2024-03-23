@@ -14,27 +14,39 @@ export class CardCollection {
     this.cards = new Map<number, Card>();
 
     // Si el archivo de colección no existe, escribirlo
-    if (!fs.existsSync(this.collectionPath)) { 
+    if (!fs.existsSync(this.collectionPath)) {
       this.writeCards();
     }
     this.loadCards();
   }
 
+  // La lectura debe de terminar antes de que se sigan leyendo datos
   loadCards(): void {
-    fs.readFile(this.collectionPath, (err, data) => {
-      if (err) {
-        throw new Error(
-          chalk.red(`Error`) +
-            `: no se ha conseguido leer el fichero ` +
-            chalk.green(`${this.collectionPath}`),
+    try {
+      const data = fs.readFileSync(this.collectionPath);
+      const parsedData = JSON.parse(data.toString());
+      for (const cardData of parsedData) {
+        const card = new Card(
+          cardData.id,
+          cardData.name,
+          cardData.mana,
+          cardData.cardColor,
+          cardData.cardType,
+          cardData.cardRarity,
+          cardData.rules,
+          cardData.powerAndResistance,
+          cardData.loyalty,
+          cardData.value,
         );
-      } else {
-        const parsedData = JSON.parse(data.toString());
-        for (const card of parsedData) {
-          this.cards.set(card.id, card);
-        }
+        this.cards.set(card.id, card);
       }
-    });
+    } catch (err) {
+      throw new Error(
+        chalk.red(`Error`) +
+          `: no se ha conseguido leer el fichero ` +
+          chalk.green(`${this.collectionPath}`),
+      );
+    }
   }
 
   writeCards(): void {
@@ -110,7 +122,7 @@ export class CardCollection {
   listCards(): string {
     let cardList = chalk.green("Cartas en la colección:\n");
     this.cards.forEach((card) => {
-      cardList += `${card.attributes()}\n`;
+      cardList += card.attributes();
     });
     return cardList;
   }

@@ -221,7 +221,22 @@ yargs(hideBin(process.argv))
     },
     (argv) => {
       const collection = new CardCollection(argv.user);
-      collection.showCardInfo(argv.id);
+      console.log(collection.showCardInfo(argv.id));
+    },
+  )
+  .command(
+    "list",
+    "Mostrar todas las cartas de la colección",
+    {
+      user: {
+        describe: "Nombre de usuario",
+        demandOption: true,
+        type: "string",
+      },
+    },
+    (argv) => {
+      const collection = new CardCollection(argv.user);
+      console.log(collection.listCards());
     },
   )
   .command(
