@@ -1,6 +1,20 @@
 import "mocha";
 import { expect } from "chai";
 import { FilterMapAddReduce, FilterMapSubReduce, FilterMapProdReduce, FilterMapDivReduce, } from "../src/ejercicio-pe.js";
+// describe("FilterMap", () => {
+//   const numberList: number[] = [1, 2, 3, 4, 5, 6];
+//   const filterMap: FilterMapAddReduce = new FilterMapAddReduce(
+//     numberList,
+//   );
+//   function filterFunction(x: number): boolean {
+//     if (x % 2 == 0) {
+//         return true;
+//     }
+//     return false;
+//   }
+//   const expectedResult: number[] = [2, 4, 5, 6];
+//   filterMap.Filter(filterFunction);
+// });
 describe("FilterMapAddReduce", () => {
     const numberList = [1, 2, 3];
     const filterMapAddReduce = new FilterMapAddReduce(numberList);
