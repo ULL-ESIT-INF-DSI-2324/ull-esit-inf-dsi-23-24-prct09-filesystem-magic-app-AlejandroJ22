@@ -3,11 +3,63 @@ import { Card } from "./card.js";
 import fs from "fs";
 import chalk from "chalk";
 
-export class CardCollection {
+/**
+ * Interfaz que describe los métodos públicos de la clase CardCollection.
+ */
+export interface CardCollectionInterface {
+  /**
+   * Método que añade una nueva carta a la colección.
+   * @param newCard La nueva carta que se va a añadir.
+   */
+  addCard(newCard: Card): void;
+
+  /**
+   * Método que actualiza una carta en la colección.
+   * @param modifiedCard La carta modificada que se va a actualizar.
+   */
+  updateCard(modifiedCard: Card): void;
+
+  /**
+   * Método que elimina una carta de la colección.
+   * @param cardId El ID de la carta que se va a eliminar.
+   */
+  removeCard(cardId: number): void;
+
+  /**
+   * Método que devuelve una cadena con la lista de cartas en la colección.
+   * @returns Una cadena con la lista de cartas en la colección.
+   */
+  listCards(): string;
+
+  /**
+   * Método que devuelve información detallada de una carta específica en la colección.
+   * @param cardId El ID de la carta de la cual se quiere obtener la información.
+   * @returns Una cadena con la información detallada de la carta.
+   */
+  showCardInfo(cardId: number): string;
+}
+
+/**
+ * Clase que representa una colección de cartas.
+ */
+export class CardCollection implements CardCollectionInterface {
+  /**
+   * El nombre de usuario asociado a la colección.
+   */
   public readonly username: string;
+  /**
+   * La ruta del archivo de la colección.
+   */
   private readonly collectionPath: string;
+  /**
+   * Mapa que contiene las cartas en la colección, donde la clave es el ID de la carta.
+   */
   private cards: Map<number, Card>;
 
+  /**
+   * Constructor de la clase CardCollection.
+   * @param username El nombre de usuario asociado a la colección.
+   */
   constructor(username: string) {
     this.username = username;
     this.collectionPath = `./collections/${this.username}.json`;
@@ -20,7 +72,9 @@ export class CardCollection {
     this.loadCards();
   }
 
-  // La lectura debe de terminar antes de que se sigan leyendo datos
+  /**
+   * Método privado que carga las cartas desde el archivo de colección.
+   */
   loadCards(): void {
     try {
       const data = fs.readFileSync(this.collectionPath);
@@ -49,6 +103,9 @@ export class CardCollection {
     }
   }
 
+  /**
+   * Método que escribe las cartas en el archivo de colección.
+   */
   writeCards(): void {
     const cardsData = JSON.stringify([...this.cards.values()], null, 2);
     // console.log(JSON.stringify([...this.cards.values()], null, 2));
@@ -68,6 +125,10 @@ export class CardCollection {
     });
   }
 
+  /**
+   * Método que añade una nueva carta a la colección.
+   * @param newCard La nueva carta que se va a añadir.
+   */
   addCard(newCard: Card): void {
     if (this.cards.has(newCard.id)) {
       throw new Error(
@@ -85,6 +146,10 @@ export class CardCollection {
     this.writeCards();
   }
 
+  /**
+   * Método que actualiza una carta en la colección.
+   * @param modifiedCard La carta modificada que se va a actualizar.
+   */
   updateCard(modifiedCard: Card): void {
     if (this.cards.has(modifiedCard.id)) {
       this.cards.set(modifiedCard.id, modifiedCard);
@@ -102,6 +167,10 @@ export class CardCollection {
     this.writeCards();
   }
 
+  /**
+   * Método que elimina una carta de la colección.
+   * @param cardId El ID de la carta que se va a eliminar.
+   */
   removeCard(cardId: number): void {
     if (this.cards.has(cardId)) {
       this.cards.delete(cardId);
@@ -119,6 +188,10 @@ export class CardCollection {
     }
   }
 
+  /**
+   * Método que devuelve una cadena con la lista de cartas en la colección.
+   * @returns Una cadena con la lista de cartas en la colección.
+   */
   listCards(): string {
     let cardList = chalk.green("Cartas en la colección:\n");
     this.cards.forEach((card) => {
@@ -127,6 +200,11 @@ export class CardCollection {
     return cardList;
   }
 
+  /**
+   * Método que devuelve información detallada de una carta específica en la colección.
+   * @param cardId El ID de la carta de la cual se quiere obtener la información.
+   * @returns Una cadena con la información detallada de la carta.
+   */
   showCardInfo(cardId: number): string {
     const card = this.cards.get(cardId);
     if (card) {

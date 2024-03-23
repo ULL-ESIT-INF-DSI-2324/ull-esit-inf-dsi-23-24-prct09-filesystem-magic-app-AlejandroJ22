@@ -4,14 +4,14 @@
 export abstract class FilterMapReduce {
   /**
    * Constructor de la clase FilterMapReduce
-   * 
+   *
    * @param listNumbers lista de números que se usará para calcular las operaciones.
    */
   constructor(protected listNumbers: number[] = []) {}
 
   /**
    * Aplica una función lógica a la lista de números.
-   * 
+   *
    * @param filterFunction predicado lógico al cual será sujeto cada elemento de la lista
    * @returns lista de los números que cumplen con el predicado lógico.
    */
@@ -25,9 +25,9 @@ export abstract class FilterMapReduce {
     return results;
   }
   /**
-   * Aplica un mapeado basado en una función tomada por parametros. 
+   * Aplica un mapeado basado en una función tomada por parametros.
    * @note La clave de cada valor siempre serán los índices originales de la posición de cada elemento.
-   * 
+   *
    * @param mapFunction función de mapeado.
    * @returns mapeado de la lista.
    */
@@ -45,7 +45,7 @@ export abstract class FilterMapReduce {
 
   /**
    * Método abstracto para aplicar la función reduce tradicional de diferentes maneras en las clases hijas.
-   * 
+   *
    * @returns el resultado de la operación.
    */
   protected abstract Reduce(): number;
