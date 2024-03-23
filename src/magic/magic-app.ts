@@ -243,4 +243,6 @@ yargs(hideBin(process.argv))
       const collection = new CardCollection(argv.user);
       collection.removeCard(argv.id);
     },
-  );
+  )
+  .demandCommand(1, "Usa algún comando.")
+  .help().argv;

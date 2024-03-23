@@ -10,13 +10,13 @@ export class CardCollection {
 
   constructor(username: string) {
     this.username = username;
-
-    this.collectionPath = `./collections/${this.username}`;
-    // Si el directorio no está ya creado, lo creamos.
-    if (!fs.existsSync(this.collectionPath)) {
-      fs.mkdirSync(this.collectionPath);
-    }
+    this.collectionPath = `./collections/${this.username}.json`;
     this.cards = new Map<number, Card>();
+
+    // Si el archivo de colección no existe, escribirlo
+    if (!fs.existsSync(this.collectionPath)) { 
+      this.writeCards();
+    }
     this.loadCards();
   }
 
@@ -39,6 +39,7 @@ export class CardCollection {
 
   writeCards(): void {
     const cardsData = JSON.stringify([...this.cards.values()], null, 2);
+    // console.log(JSON.stringify([...this.cards.values()], null, 2));
     fs.writeFile(this.collectionPath, cardsData, (err) => {
       if (err) {
         throw new Error(
@@ -69,7 +70,7 @@ export class CardCollection {
           ` a la colección.`,
       );
     }
-    this.writeCards;
+    this.writeCards();
   }
 
   updateCard(modifiedCard: Card): void {
@@ -86,7 +87,7 @@ export class CardCollection {
           `: No existe una carta con el ID especificado en la colección.`,
       );
     }
-    this.writeCards;
+    this.writeCards();
   }
 
   removeCard(cardId: number): void {
@@ -103,7 +104,7 @@ export class CardCollection {
           `: No existe una carta con el ID especificado en la colección.`,
       );
     }
-    this.writeCards;
+    this.writeCards();
   }
 
   listCards(): string {
